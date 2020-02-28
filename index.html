@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Master-Detail-View</title>
+  <style>
+    a, a:link, a:visited, a:active, a:focus {
+      text-decoration: none;
+      color: blue;
+    }
+    .selected * {
+      color: red !important;
+      text-decoration: underline !important;
+    }
+    .selected ::before {
+      content: '\203A ';
+    }
+    .selected ::after {
+      content: ' \2039';
+    }
+  </style>
+</head>
+<body>
+<script src="./src/script.js"></script>
+</body>
+</html>
