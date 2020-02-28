@@ -1,4 +1,4 @@
-import { ADD_TODO, SELECT_TODO, UPDATE_TODO } from "./consts";
+import { ADD_TODO, DELETE_TODO, SELECT_TODO, UPDATE_TODO } from "./consts";
 import uuid from "../common/uuid";
 
 // Internal Action creators
@@ -30,6 +30,13 @@ const todoUpdate = (id, changedData) => {
   };
 };
 
+const todoDelete = (id) => {
+  return {
+    type: DELETE_TODO,
+    payload: id,
+  }
+};
+
 // External Actions
 export const addTodo = (title) => dispatch => {
   dispatch(todoAdd(title));
@@ -42,4 +49,8 @@ export const selectTodo = (selectedId) => dispatch => {
 export const updateTodo = (changedData) => (dispatch, getState) => {
   const id = getState().selectedTodo;
   dispatch(todoUpdate(id, changedData));
+};
+
+export const deleteTodo = (listItemId) => (dispatch) => {
+  dispatch(todoDelete(listItemId));
 };

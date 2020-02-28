@@ -8,15 +8,22 @@
       text-decoration: none;
       color: blue;
     }
-    .selected * {
+    .selected a {
       color: red !important;
       text-decoration: underline !important;
     }
-    .selected ::before {
+    .selected a ::before {
       content: '\203A ';
     }
-    .selected ::after {
+    .selected a ::after {
       content: ' \2039';
+    }
+
+    button {
+      margin-left: 10px;
+      color: red;
+      background-color: silver;
+      border: 1px solid darkgray;
     }
   </style>
 </head>

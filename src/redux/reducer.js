@@ -12,7 +12,7 @@ const ids = (state, action) => {
     case ADD_TODO:
       return [...state, action.payload.id];
     case DELETE_TODO:
-      return state.filter(id => id === action.payload.id);
+      return state.filter(id => id !== action.payload);
     default:
       return state;
   }
@@ -40,7 +40,7 @@ const byId = (state, action) => {
         },
       };
     case DELETE_TODO:
-      const {[action.payload.id]: removedItem, ...newState} = state; // Cleanly remove item from state
+      const {[action.payload]: removedItem, ...newState} = state; // Cleanly remove item from state
       return newState;
     default:
       return state;
@@ -63,7 +63,7 @@ const selected = (state, action) => {
     case SELECT_TODO:
       return action.payload;
     case DELETE_TODO:
-      if (action.payload.id === state)
+      if (action.payload === state)
         return null;
       return state;
     default:

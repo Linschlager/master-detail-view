@@ -1,7 +1,7 @@
-import { mount as mountListView, update as updateListView } from './components/listview';
+import createList, { mount as mountListView, update as updateListView } from './components/listview';
 import { mount as mountDetailsView, update as updateDetailsView } from './components/detailsView';
 import store from "./redux/store";
-import { addTodo, selectTodo, updateTodo } from "./redux/actions";
+import { addTodo, deleteTodo, selectTodo, updateTodo } from "./redux/actions";
 import createInput from "./components/input";
 
 
@@ -31,11 +31,20 @@ function renderListView() {
   const handleSelect = (selectedId) => {
     store.dispatch(selectTodo(selectedId))
   };
+  const handleDelete = (listItemId) => {
+    store.dispatch(deleteTodo(listItemId));
+  };
+  const list = createList({
+    items: store.getState().todos,
+    selectedItem: store.getState().selectedTodo,
+    onSelectionChange: handleSelect,
+    onDelete: handleDelete,
+  });
   const unsubscribe = store.subscribe(store => {
-    updateListView({ list: store.todos, selected: store.selectedTodo })
+    list.update({ items: store.todos, selectedItem: store.selectedTodo })
   });
   document.addEventListener('close', unsubscribe);
-  mountListView(appRoot)({ list: store.getState().todos, onClick: handleSelect });
+  list.mount(appRoot);
 }
 
 function renderDetailView() {

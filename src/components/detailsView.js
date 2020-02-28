@@ -10,8 +10,8 @@ export const update = ({ selectedItem, onChange }) => {
     titleInput.update({ disabled: true, title: 'Please select a todo first' });
     contentInput.update({ disabled: true, title: 'Please select a todo first' });
   } else {
-    titleInput.update({ disabled: false, title: null });
-    contentInput.update({ disabled: false, title: null });
+    titleInput.update({ disabled: false, title: '' });
+    contentInput.update({ disabled: false, title: '' });
   }
 
   if (onChange !== undefined) {
