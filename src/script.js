@@ -1,8 +1,8 @@
 import { mount as mountListView, update as updateListView } from './components/listview';
-import { mount as mountInputField, update as updateInputField } from './components/inputField';
 import { mount as mountDetailsView, update as updateDetailsView } from './components/detailsView';
 import store from "./redux/store";
 import { addTodo, selectTodo, updateTodo } from "./redux/actions";
+import createInput from "./components/input";
 
 
 const appRoot = document.createElement('div');
@@ -14,18 +14,17 @@ renderListView();
 renderDetailView();
 
 function renderInputField() {
-  const blurHandler = event => {
+  const input = createInput({
+    placeholder: 'Create your first todo',
+  });
+  input.mount(appRoot);
+  const changeHandler = event => {
     if (event.target.value.length > 0) {
       store.dispatch(addTodo(event.target.value));
-      updateInputField({value: ''}); // Clear input field
+      input.update({value: ''}); // Clear input field
     }
   };
-  let value = '';
-  const changeChandler = event => {
-    value = event.target.value;
-    updateInputField({ value });
-  };
-  mountInputField(appRoot)({ onBlur: blurHandler, onChange: changeChandler, value });
+  input.update({ onChange: changeHandler }); // Attach change listener
 }
 
 function renderListView() {
@@ -36,7 +35,7 @@ function renderListView() {
     updateListView({ list: store.todos, selected: store.selectedTodo })
   });
   document.addEventListener('close', unsubscribe);
-  mountListView(appRoot)({ list: { ids: [], byId: {}}, onClick: handleSelect });
+  mountListView(appRoot)({ list: store.getState().todos, onClick: handleSelect });
 }
 
 function renderDetailView() {

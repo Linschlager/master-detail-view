@@ -1,47 +1,31 @@
+import createInput from "./input";
+
 const renderedDetailView = document.createElement('div');
 
-const titleField = document.createElement('input');
-titleField.placeholder = 'Title';
-renderedDetailView.appendChild(titleField);
-
-const contentField = document.createElement('input');
-contentField.placeholder = 'Content';
-renderedDetailView.appendChild(contentField);
+let titleInput = createInput({ placeholder: 'Title' });
+let contentInput = createInput({ placeholder: 'Content' });
 
 export const update = ({ selectedItem, onChange }) => {
   if (selectedItem.id === undefined) { // Disable if nothing is selected
-    titleField.disabled = true;
-    titleField.title = 'Please select a todo first';
-    contentField.disabled = true;
-    contentField.title = 'Please select a todo first';
+    titleInput.update({ disabled: true, title: 'Please select a todo first' });
+    contentInput.update({ disabled: true, title: 'Please select a todo first' });
   } else {
-    titleField.disabled = false;
-    titleField.title = '';
-    contentField.disabled = false;
-    titleField.title = '';
+    titleInput.update({ disabled: false, title: null });
+    contentInput.update({ disabled: false, title: null });
   }
 
   if (onChange !== undefined) {
-    titleField.onchange = () => onChange({ title: titleField.value});
-    titleField.onkeypress = event => {
-      if (event.key === 'Enter') contentField.onchange(event);
-    };
-    contentField.onchange = () => onChange({ content: contentField.value});
-    contentField.onkeypress = event => {
-      if (event.key === 'Enter') contentField.onchange(event);
-    };
+    titleInput.update({ onChange: (ev) => onChange({ title: ev.target.value }) });
+    contentInput.update({ onChange: (ev) => onChange({ content: ev.target.value }) });
   }
 
-  // Update content if necessary
-  if (titleField.value !== selectedItem.title) {
-    titleField.value = selectedItem.title || '';
-  }
-  if (contentField.value !== selectedItem.content) {
-    contentField.value = selectedItem.content || '';
-  }
+  titleInput.update({ value: selectedItem.title || '' });
+  contentInput.update({ value: selectedItem.content || '' })
 };
 
 export const mount = (node) => (initialProps) => {
+  titleInput.mount(renderedDetailView);
+  contentInput.mount(renderedDetailView);
   update(initialProps);
   node.appendChild(renderedDetailView);
 };
