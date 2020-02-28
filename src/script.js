@@ -1,8 +1,7 @@
 import { mount as mountListView, update as updateListView } from './components/listview';
 import { mount as mountInputField, update as updateInputField } from './components/inputField';
 import { mount as mountDetailsView, update as updateDetailsView } from './components/detailsView';
-import { dispatchAction, subscribe } from "./redux/store";
-import { ADD_TODO, SELECT_TODO, UPDATE_TODO } from "./redux/consts";
+import store from "./redux/store";
 import { addTodo, selectTodo, updateTodo } from "./redux/actions";
 
 
@@ -17,7 +16,7 @@ renderDetailView();
 function renderInputField() {
   const blurHandler = event => {
     if (event.target.value.length > 0) {
-      dispatchAction(addTodo(event.target.value));
+      store.dispatch(addTodo(event.target.value));
       updateInputField({value: ''}); // Clear input field
     }
   };
@@ -31,9 +30,9 @@ function renderInputField() {
 
 function renderListView() {
   const handleSelect = (selectedId) => {
-    dispatchAction(selectTodo(selectedId))
+    store.dispatch(selectTodo(selectedId))
   };
-  const unsubscribe = subscribe(store => {
+  const unsubscribe = store.subscribe(store => {
     updateListView({ list: store.todos, selected: store.selectedTodo })
   });
   document.addEventListener('close', unsubscribe);
@@ -42,11 +41,10 @@ function renderListView() {
 
 function renderDetailView() {
   const handleChange = (changedItem) => {
-    const { id, ...changedData } = changedItem;
-    dispatchAction(updateTodo(id, changedData));
+    store.dispatch(updateTodo(changedItem));
   };
 
-  const unsubscribe = subscribe((newStore, oldStore) => {
+  const unsubscribe = store.subscribe((newStore, oldStore) => {
     // Check if rerender is necessary
     if (newStore.selectedTodo !== oldStore.selectedTodo
       || oldStore.todos.byId[newStore.selectedTodo] !== newStore.todos.byId[newStore.selectedTodo]) {

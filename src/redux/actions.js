@@ -36,9 +36,10 @@ export const addTodo = (title) => dispatch => {
 };
 
 export const selectTodo = (selectedId) => dispatch => {
-  dispatch(todoSelect());
+  dispatch(todoSelect(selectedId));
 };
 
-export const updateTodo = (id, changedData) => dispatch => {
+export const updateTodo = (changedData) => (dispatch, getState) => {
+  const id = getState().selectedTodo;
   dispatch(todoUpdate(id, changedData));
 };

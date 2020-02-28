@@ -26,7 +26,7 @@ export const update = ({ selectedItem, onChange }) => {
     titleField.onkeypress = event => {
       if (event.key === 'Enter') contentField.onchange(event);
     };
-    contentField.onchange = () => onChange({ content: titleField.value});
+    contentField.onchange = () => onChange({ content: contentField.value});
     contentField.onkeypress = event => {
       if (event.key === 'Enter') contentField.onchange(event);
     };
