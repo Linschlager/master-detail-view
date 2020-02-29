@@ -1,5 +1,5 @@
-import { ADD_TODO, DELETE_TODO, SELECT_TODO, UPDATE_TODO } from "./consts";
-import uuid from "../common/uuid";
+import {ADD_TODO, DELETE_TODO, SELECT_TODO, UPDATE_TODO} from './consts';
+import uuid from '../common/uuid';
 
 // Internal Action creators
 const todoAdd = (title) => {
@@ -9,7 +9,7 @@ const todoAdd = (title) => {
     payload: {
       id,
       title,
-    }
+    },
   };
 };
 
@@ -26,7 +26,7 @@ const todoUpdate = (id, changedData) => {
     payload: {
       id,
       ...changedData,
-    }
+    },
   };
 };
 
@@ -34,15 +34,15 @@ const todoDelete = (id) => {
   return {
     type: DELETE_TODO,
     payload: id,
-  }
+  };
 };
 
 // External Actions
-export const addTodo = (title) => dispatch => {
+export const addTodo = (title) => (dispatch) => {
   dispatch(todoAdd(title));
 };
 
-export const selectTodo = (selectedId) => dispatch => {
+export const selectTodo = (selectedId) => (dispatch) => {
   dispatch(todoSelect(selectedId));
 };
 

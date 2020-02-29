@@ -1,9 +1,12 @@
 import createList from './components/listview';
-import { mount as mountDetailsView, update as updateDetailsView } from './components/detailsView';
+import {
+  mount as mountDetailsView,
+  update as updateDetailsView,
+} from './components/detailsView';
 
-import store from "./redux/store";
-import { addTodo, deleteTodo, selectTodo, updateTodo } from "./redux/actions";
-import createInput from "./components/input";
+import store from './redux/store';
+import {addTodo, deleteTodo, selectTodo, updateTodo} from './redux/actions';
+import createInput from './components/input';
 
 (() => {
   const appRoot = document.createElement('div');
@@ -15,7 +18,7 @@ import createInput from "./components/input";
         placeholder: 'Create your first todo',
       });
       input.mount(appRoot);
-      const changeHandler = event => {
+      const changeHandler = (event) => {
         if (event.target.value.length > 0) {
           store.dispatch(addTodo(event.target.value));
           input.update({value: ''}); // Clear input field
@@ -29,7 +32,7 @@ import createInput from "./components/input";
   setupListView: {
     try {
       const handleSelect = (selectedId) => {
-        store.dispatch(selectTodo(selectedId))
+        store.dispatch(selectTodo(selectedId));
       };
       const handleDelete = (listItemId) => {
         store.dispatch(deleteTodo(listItemId));
@@ -40,8 +43,8 @@ import createInput from "./components/input";
         onSelectionChange: handleSelect,
         onDelete: handleDelete,
       });
-      const unsubscribe = store.subscribe(store => {
-        list.update({items: store.todos, selectedTodo: store.selectedTodo})
+      const unsubscribe = store.subscribe((store) => {
+        list.update({items: store.todos, selectedTodo: store.selectedTodo});
       });
       document.addEventListener('close', unsubscribe);
       list.mount(appRoot);
@@ -57,9 +60,12 @@ import createInput from "./components/input";
 
       const unsubscribe = store.subscribe((newStore, oldStore) => {
         // Check if rerender is necessary
-        if (newStore.selectedTodo !== oldStore.selectedTodo
-          || oldStore.todos.byId[newStore.selectedTodo] !== newStore.todos.byId[newStore.selectedTodo]) {
-          updateDetailsView({selectedTodo: newStore.todos.byId[newStore.selectedTodo]})
+        if (newStore.selectedTodo !== oldStore.selectedTodo ||
+          oldStore.todos.byId[newStore.selectedTodo] !==
+          newStore.todos.byId[newStore.selectedTodo]) {
+          updateDetailsView({
+            selectedTodo: newStore.todos.byId[newStore.selectedTodo],
+          });
         }
       });
       document.addEventListener('close', unsubscribe);

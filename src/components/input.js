@@ -2,11 +2,11 @@ const createInput = (props) => {
   const internalInput = document.createElement('input');
   let changeHandler = undefined;
   let keydownHandler = undefined;
-  const update = ({ onChange, ...rest }) => {
+  const update = ({onChange, ...rest}) => {
     if (onChange !== undefined) {
       // Remove old handler and add new one
       if (changeHandler !== undefined) {
-        internalInput.removeEventListener('blur', changeHandler)
+        internalInput.removeEventListener('blur', changeHandler);
       }
       changeHandler = onChange;
       internalInput.addEventListener('blur', changeHandler);
@@ -20,7 +20,8 @@ const createInput = (props) => {
       };
       internalInput.addEventListener('keydown', keydownHandler);
     }
-    Object.entries(rest).forEach(([key, value]) => { // directly pass unlisted properties to native input
+    // directly pass unlisted properties to native input
+    Object.entries(rest).forEach(([key, value]) => {
       internalInput[key] = value;
     });
   };
@@ -30,7 +31,7 @@ const createInput = (props) => {
     node.appendChild(internalInput);
   };
 
-  return { mount, update };
+  return {mount, update};
 };
 
 export default createInput;

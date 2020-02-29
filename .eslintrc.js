@@ -15,5 +15,6 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
+        "linebreak-style": "off" // Don't enforce useless file changes that git changes anyway
     }
 };

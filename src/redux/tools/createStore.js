@@ -6,11 +6,12 @@ export const createStore = (initialStore, rootReducer, middleware) => {
   const subscribe = (fn) => {
     const length = subscribers.push(fn);
     return () => { // Return cheaper unsubscribe function
-      subscribers.splice(length-1,1);
+      subscribers.splice(length-1, 1);
     };
   };
 
-  // const actionHistory = []; // Required to regenerate the store based on past actions
+  // Required to regenerate the store based on past actions
+  // const actionHistory = [];
   const getState = () => {
     return currentState;
     /*
@@ -21,16 +22,19 @@ export const createStore = (initialStore, rootReducer, middleware) => {
     }), initialStore);
     */
   };
-  const directDispatch = action => {
+  const directDispatch = (action) => {
     if (action) { // Test TODO remove
-      const oldState = currentState
-      //actionHistory.push(action); // Required to regenerate the store based on past actions
-      currentState = rootReducer(currentState, action); // Overwrite current State. Not required if state is regenerated
-      subscribers.forEach(subscriber => subscriber(currentState, oldState)); // Notify all subscribers
+      const oldState = currentState;
+      // Required to regenerate the store based on past actions
+      // actionHistory.push(action);
+      // Overwrite current State. Not required if state is regenerated
+      currentState = rootReducer(currentState, action);
+      // Notify all subscribers
+      subscribers.forEach((subscriber) => subscriber(currentState, oldState));
     }
     return getState();
   };
-  const boundMiddleware = middleware({ getState, dispatch: directDispatch });
-  const dispatch = action => directDispatch(boundMiddleware(action));
-  return { getState, dispatch, subscribe };
+  const boundMiddleware = middleware({getState, dispatch: directDispatch});
+  const dispatch = (action) => directDispatch(boundMiddleware(action));
+  return {getState, dispatch, subscribe};
 };
