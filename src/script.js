@@ -36,12 +36,12 @@ import createInput from "./components/input";
       };
       const list = createList({
         items: store.getState().todos,
-        selectedItem: store.getState().selectedTodo,
+        selectedTodo: store.getState().selectedTodo,
         onSelectionChange: handleSelect,
         onDelete: handleDelete,
       });
       const unsubscribe = store.subscribe(store => {
-        list.update({items: store.todos, selectedItem: store.selectedTodo})
+        list.update({items: store.todos, selectedTodo: store.selectedTodo})
       });
       document.addEventListener('close', unsubscribe);
       list.mount(appRoot);
@@ -59,7 +59,7 @@ import createInput from "./components/input";
         // Check if rerender is necessary
         if (newStore.selectedTodo !== oldStore.selectedTodo
           || oldStore.todos.byId[newStore.selectedTodo] !== newStore.todos.byId[newStore.selectedTodo]) {
-          updateDetailsView({selectedItem: newStore.todos.byId[newStore.selectedTodo]})
+          updateDetailsView({selectedTodo: newStore.todos.byId[newStore.selectedTodo]})
         }
       });
       document.addEventListener('close', unsubscribe);

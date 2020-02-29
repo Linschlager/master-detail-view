@@ -12,7 +12,9 @@ const createInput = (props) => {
       internalInput.addEventListener('blur', changeHandler);
 
       // Remove old handler and add new one
-      if (keydownHandler !== undefined) internalInput.removeEventListener('keydown', keydownHandler);
+      if (keydownHandler !== undefined) {
+        internalInput.removeEventListener('keydown', keydownHandler);
+      }
       keydownHandler = (event) => {
         if (event.key === 'Enter') onChange(event);
       };

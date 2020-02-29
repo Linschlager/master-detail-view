@@ -4,7 +4,7 @@ import { createStore } from "./tools/createStore";
 
 // THE State object.
 let store = createStore({
-    selectedItem: null,
+    selectedTodo: undefined,
     todos: {
       ids: [],
       byId: {},

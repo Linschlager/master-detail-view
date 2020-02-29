@@ -2,7 +2,7 @@ const createList = (props) => {
   const internalListRoot = document.createElement('ul');
   let changeHandler = () => {};
   let deleteHandler = () => {};
-  const update = ({ items, onSelectionChange, selectedItem, onDelete }) => {
+  const update = ({ items, onSelectionChange, selectedTodo, onDelete }) => {
     if (onSelectionChange !== undefined) {
       // Update changeHandler and changeHandler on all children
       changeHandler = id => event => onSelectionChange(id);
@@ -44,11 +44,11 @@ const createList = (props) => {
         internalListRoot.appendChild(listNode);
       } else {
         // If it's selected but doesn't have the selected class yet
-        if (existingItem.id === selectedItem && !existingItem.className.includes('selected')) {
+        if (existingItem.id === selectedTodo && !existingItem.className.includes('selected')) {
           existingItem.className = "selected";
         }
         // If it's no longer selected but still has the selected class
-        if (existingItem.id !== selectedItem && existingItem.className.includes('selected')) {
+        if (existingItem.id !== selectedTodo && existingItem.className.includes('selected')) {
           existingItem.className = "";
         }
         // If the text content is not up to date
