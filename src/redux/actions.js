@@ -1,4 +1,4 @@
-import {ADD_TODO, DELETE_TODO, SELECT_TODO, UPDATE_TODO} from './consts';
+import {ACTIVATE_TODO, ADD_TODO, DELETE_TODO, FINISH_TODO, SELECT_TODO, UPDATE_TODO} from './consts';
 import uuid from '../common/uuid';
 
 // Internal Action creators
@@ -37,6 +37,20 @@ const todoDelete = (id) => {
   };
 };
 
+const todoFinish = (id) => {
+  return {
+    type: FINISH_TODO,
+    payload: id,
+  };
+};
+
+const todoActivate = (id) => {
+  return {
+    type: ACTIVATE_TODO,
+    payload: id,
+  };
+};
+
 // External Actions
 export const addTodo = (title) => (dispatch) => {
   dispatch(todoAdd(title));
@@ -54,3 +68,17 @@ export const updateTodo = (changedData) => (dispatch, getState) => {
 export const deleteTodo = (listItemId) => (dispatch) => {
   dispatch(todoDelete(listItemId));
 };
+
+export const toggleTodo = (listItemId, overrideState) =>
+  (dispatch, getState) => {
+    let state = overrideState;
+    if (state === undefined) {
+      state = getState().todos.byId[listItemId].done;
+    }
+
+    if (state === true) {
+      dispatch(todoActivate(listItemId));
+    } else {
+      dispatch(todoFinish(listItemId));
+    }
+  };

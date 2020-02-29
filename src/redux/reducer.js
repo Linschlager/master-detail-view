@@ -1,4 +1,4 @@
-import {ADD_TODO, DELETE_TODO, SELECT_TODO, UPDATE_TODO} from './consts';
+import {ACTIVATE_TODO, ADD_TODO, DELETE_TODO, FINISH_TODO, SELECT_TODO, UPDATE_TODO} from './consts';
 import combineReducers from './tools/combineReducers';
 
 /**
@@ -46,6 +46,22 @@ const byId = (state, action) => {
         }
         return tempState;
       }), {});
+    case FINISH_TODO:
+      return {
+        ...state,
+        [action.payload]: {
+          ...state[action.payload],
+          done: true,
+        },
+      };
+    case ACTIVATE_TODO:
+      return {
+        ...state,
+        [action.payload]: {
+          ...state[action.payload],
+          done: false,
+        },
+      };
     default:
       return state;
   }

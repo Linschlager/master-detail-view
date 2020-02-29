@@ -5,7 +5,7 @@ import {
 } from './components/detailsView';
 
 import store from './redux/store';
-import {addTodo, deleteTodo, selectTodo, updateTodo} from './redux/actions';
+import {addTodo, deleteTodo, finishTodo, selectTodo, toggleTodo, updateTodo} from './redux/actions';
 import createInput from './components/input';
 
 (() => {
@@ -37,10 +37,14 @@ import createInput from './components/input';
       const handleDelete = (listItemId) => {
         store.dispatch(deleteTodo(listItemId));
       };
+      const handleToggle = (listItemId, overrideState) => {
+        store.dispatch(toggleTodo(listItemId, overrideState));
+      };
       const list = createList({
         items: store.getState().todos,
         selectedTodo: store.getState().selectedTodo,
         onSelectionChange: handleSelect,
+        onToggle: handleToggle,
         onDelete: handleDelete,
       });
       const unsubscribe = store.subscribe((store) => {

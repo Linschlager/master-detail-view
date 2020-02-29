@@ -1,0 +1,29 @@
+a, a:link, a:visited, a:active, a:focus {
+    text-decoration: none;
+    color: blue;
+}
+.selected a {
+    color: red !important;
+    text-decoration: underline !important;
+}
+.selected a ::before {
+    content: '\203A ';
+}
+.selected a ::after {
+    content: ' \2039';
+}
+.done a {
+    text-decoration: line-through;
+}
+
+button {
+    margin-right: 10px;
+    color: red;
+    background-color: silver;
+    border: 1px solid darkgray;
+}
+
+ul {
+    list-style: none;
+    padding-inline-start: 0;
+}
