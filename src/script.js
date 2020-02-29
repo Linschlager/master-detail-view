@@ -5,7 +5,13 @@ import {
 } from './components/detailsView';
 
 import store from './redux/store';
-import {addTodo, deleteTodo, finishTodo, selectTodo, toggleTodo, updateTodo} from './redux/actions';
+import {
+  addTodo,
+  deleteTodo,
+  selectTodo,
+  toggleTodo,
+  updateTodo,
+} from './redux/actions';
 import createInput from './components/input';
 
 (() => {
